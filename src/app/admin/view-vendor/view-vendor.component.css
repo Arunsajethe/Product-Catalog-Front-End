@@ -1,0 +1,16 @@
+table,th,td{
+    border: 2px solid black;
+    background-color: lavender;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+tr{
+    width: 50px;
+}
+
+button{
+    background-color: white;
+    color: black;
+}

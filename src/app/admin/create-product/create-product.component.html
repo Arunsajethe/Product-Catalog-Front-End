@@ -1,0 +1,131 @@
+<div class="body">
+    <div class="wrapper">
+        <form #mycreateproduct="ngForm" (ngSubmit)="dataSubmitted()">
+            <h1>Add Product</h1>
+
+
+            <div class="input-box">
+                <label for="">Product Name</label>
+                <input type="text" name="name" [(ngModel)]="products.pname" #pname="ngModel" required [class.is-invalid]="pname.invalid && pname.touched" pattern="[1-9][0-9]*" >
+                <div *ngIf="pname.touched">
+                    <div *ngIf="pname.invalid">
+                        <small class="text-danger" *ngIf="pname.errors?.['required']">Product name can't be empty </small>
+                        <small class="text-danger" *ngIf="pname.errors?.['pattern']">Product name should be numbers <br></small>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="input-box">
+                <label for="">Product Category</label>
+                <select class="form-select" (click)="featuredisplay(category.value)"  [(ngModel)]="products.category" name="gender" #category="ngModel" [class.is-invalid]="category.invalid && category.touched && haserror" required (blur)="categoryValidity(category.value)" (change)="categoryValidity(category.value)">
+                    <option value="default">---Select the Category---</option>
+                    <option *ngFor="let cat of categorylist" value="{{cat}}"  >{{cat}}</option>  
+                  </select>
+                  <div *ngIf="category.touched">
+                    <div *ngIf="category.invalid">
+                    <small class="text-danger" *ngIf="category.errors?.['required']">Product category Can't be empty</small>     
+                    </div> 
+                </div>
+                <small class="text-danger" [class.d-none]="category.untouched || !haserror">Select valid category</small>     
+            </div>
+
+
+            <div class="input-box" *ngIf="category.value !== '' && category.value !== 'default' ">
+                <label for="temp" >Product Feature</label>
+                <table >
+                    <tr *ngIf="category.value !== 'wireline' " >
+                        <td><p>Calling Feature</p></td>
+                    </tr>
+                    <tr *ngIf="category.value !== 'wireline' " >
+                        <td><input type="checkbox" name="calling" id="temp" value="Unlimited Calling" required  [(ngModel)]="callingIsChecked" #callfeature="ngModel"  (change)="assignFeature('Unlimited Calling',callingIsChecked?true:false)"  [class.is-invalid]="callfeature.dirty"></td>
+                        <td>Unlimited Calling</td>
+                    </tr>
+                    
+                    <tr *ngIf="category.value !== 'wireline' " >
+                        <td><p>SMS Feature</p></td>
+                    </tr>
+                    <tr *ngIf="category.value !== 'wireline' " >
+                        <td><input type="checkbox" name="sms" id="temp" value="100 SMS/Day" required  [(ngModel)]="smsIsChecked" (change)="assignFeature('100 SMS/Day',smsIsChecked?true:false)" ></td>
+                        <td>100 SMS/Day</td>
+                    </tr>
+                    <tr *ngIf="category.value !== 'wireless'  ">
+                        <td><p>Internet Pack</p></td>
+                    </tr>
+                    <tr *ngIf="category.value !== 'wireless'  ">
+                        <td><input type="checkbox" name="wifi" id="temp" value="Unlimited Internet" required  [(ngModel)]="wifiIsChecked" (change)="assignFeature('Unlimited Internet',wifiIsChecked?true:false)" ></td>
+                        <td>Unlimited Internet</td>
+                    </tr> 
+                </table>
+                <p>Internet Feature</p>
+                <div *ngFor="let item of features; let i= index">
+                    <table >
+                        <tr>
+                            <td><input type="checkbox" name="item" id="temp" [value]="item" required [disabled]="category.value == '' || category.value == 'default' " [(ngModel)]="isChecked1[i]" #prodfeature (change)="assignFeature(item,isChecked1[i]?true:false)"  [class.is-invalid]="prodfeature.checked && featureValidity()"></td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td>{{item}}</td>
+                        </tr>   
+                    </table>
+                </div>
+                <div *ngIf="checkingProdFeature">
+                    <div *ngIf="!featureValidity()">
+                        <small class="text-danger" *ngIf="products.category === 'wireline'">Feature should contain 1 Internet features and 1 Internet pack  </small>
+                        <small class="text-danger" *ngIf="products.category === 'wireless'">Feature should contain 1 Internet feature, 1 Sms feature and 1 Call feature</small>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="input-box">
+                <label for="">Product Validity</label>
+                <input type="number" name="validity" [(ngModel)]="products.validity" #validity="ngModel"  required [class.is-invalid]="validity.invalid && validity.touched" pattern="[0-9]*" min="28" max="366" >
+                <div *ngIf="validity.touched">
+                    <div *ngIf="validity.invalid">
+                        <small class="text-danger" *ngIf="validity.errors?.['required']">Product validity can't be empty </small>
+                        <small class="text-danger" *ngIf="validity.errors?.['pattern']">Product validity should be number <br></small>
+                        <small class="text-danger" *ngIf="validity.errors?.['min']">Product validity should be atleast 28 days <br></small>
+                        <small class="text-danger" *ngIf="validity.errors?.['max']">Product validity should not more than 365 days <br></small>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="input-box" >
+                <label for="temp" >Product Sub-product</label>
+                <div >
+                    <table >
+                        <tr *ngFor="let arr of subproductarr; let j= index">
+                            <td><input type="checkbox" name="arr" id="temp" [(ngModel)]="isChecked[j]" #sublist="ngModel" (change)="checkedSupProduct(arr.sname,isChecked[j]?true:false)"  required [class.is-invalid]="checkingSubProd && subProductValidity()"></td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td>{{arr.sname}}</td>
+                        </tr>
+                    </table>
+                    <div *ngIf="checkingSubProd">
+                        <div *ngIf="!subProductValidity()">
+                            <small class="text-danger">Atleast 1 sub-product should be selected</small>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="input-box">
+                <label for="">Product Recommended</label>
+                <select class="form-select"  [(ngModel)]="products.recommended" name="recommend" #recommend="ngModel" [class.is-invalid]="recommend.invalid && recommend.touched && haserror1" required (blur)="recommentedValidity(recommend.value)" (change)="recommentedValidity(recommend.value)">
+                    <option value="default">---Select the Category---</option>
+                    <option *ngFor="let rec of recommendedlist" value="{{rec}}"  >{{rec}}</option>  
+                  </select>
+                  <div *ngIf="recommend.touched">
+                    <div *ngIf="recommend.invalid">
+                    <small class="text-danger" *ngIf="recommend.errors?.['required']">Product category Can't be empty</small>     
+                    </div> 
+                </div>
+                <small class="text-danger" [class.d-none]="recommend.untouched || !haserror1">Select valid category</small>     
+            </div>
+            
+            <button type="submit" class="btn" [disabled]="mycreateproduct.form.invalid ">Add</button>
+        </form>
+    </div>
+</div>
+
+

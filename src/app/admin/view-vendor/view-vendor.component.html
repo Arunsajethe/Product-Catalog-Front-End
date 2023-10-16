@@ -1,0 +1,35 @@
+<br><br>
+<table style="width: 95%; left:2.5%; position: absolute;" *ngIf="hasdisplay">
+    <thead style="text-align: center;">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Email Id</th>
+            <th>Password</th>
+            <th>Choice</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let l of myRegisters">
+        <tr>
+            <td>{{l.firstname}}</td>
+            <td>{{l.lastname}}</td>
+            <td>{{l.age}}</td>
+            <td>{{l.gender}}</td>
+            <td>{{l.address}}</td>
+            <td>{{l.phno}}</td>
+            <td>{{l.email}}</td>
+            <td>{{l.password}}</td>
+            <td>
+            <button type="submit" name="oper" value="Approve" (click)="dataSubmitted(l.email,'Approve')" class="btn-btn-primary">Approved</button>
+            <button type="submit" name="oper" value="Disapprove" (click)="dataSubmitted(l.email,'Disapprove')" class="btn-btn-primary">Dis-Approved</button>
+            <button type="submit" name="oper" value="delete" (click)="dataSubmitted(l.email,'Remove')" class="btn-btn-primary">Remove</button>
+
+            </td>
+        </tr>
+    </ng-container>
+    </tbody>

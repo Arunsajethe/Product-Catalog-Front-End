@@ -1,0 +1,27 @@
+<div class="search-box">
+    <div class="search-input">
+      <input type="search" name="price" [(ngModel)]="price" placeholder="Search product by price" />
+    </div>
+    <span class="search-btn">
+      <button (click)="dataSubmitted()">Search</button>
+    </span>
+</div>
+
+<div class="container group" *ngIf="mySearch">
+  <div class="grid-1-5" *ngFor="let prod of myList ">
+      <h2 *ngIf="prod.recommended=='Consumer'">Basic Plan </h2>
+      <h2 *ngIf="prod.recommended=='Small Business'">Super Plan </h2>
+      <h2 *ngIf="prod.recommended=='Enterprise'">Premium Plan </h2>
+      <h3><sup>$</sup>{{prod.pname}}<span class="small">/{{prod.validity}} days</span></h3><br>
+      <div *ngFor="let j of prod.features">
+          <p>{{j}}</p>
+      </div>
+      <br>
+      <ul *ngFor="let i of prod.subproducts">
+          <li>{{i.sname}}</li>
+      </ul>
+      <a class="a-button" [routerLink]="['/editproduct',prod.pname,prod.category]">EDIT</a>
+      <button type="submit" class="button" >Delete</button>
+  </div>
+      
+</div>

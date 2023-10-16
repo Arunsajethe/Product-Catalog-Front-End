@@ -1,0 +1,28 @@
+    <br>
+    <div class="display" style="align-items: center;  margin: auto;">
+        <select [(ngModel)]="defaultCategory" name="category" class="form-select form-select-sm">
+        <option value="All">ALL</option>
+        <option  *ngFor="let cat of category" value="{{cat}}">{{cat}}</option>
+        </select>
+    </div>
+    <h1 *ngIf="mylength" style="text-align: center; margin-top: 10rem;"> No Product Available</h1>
+    <div class="container group">
+        <div class="grid-1-5" *ngFor="let prod of myproducts | products: defaultCategory">
+            <h2 *ngIf="prod.recommended=='Consumer'">Basic Plan </h2>
+            <h2 *ngIf="prod.recommended=='Small Business'">Super Plan </h2>
+            <h2 *ngIf="prod.recommended=='Enterprise'">Premium Plan </h2>
+            <h3><sup>$</sup>{{prod.pname}}<span class="small">/{{prod.validity}} days</span></h3><br>
+            <div *ngFor="let j of prod.features">
+                <p>{{j}}</p>
+            </div>
+            <br>
+            <ul *ngFor="let i of prod.subproducts">
+                <li>{{i.sname}}</li>
+            </ul>
+            <a class="a-button" [routerLink]="['/editproduct',prod.pname,prod.category]">EDIT</a>
+            <button type="submit" class="button" (click)="remove(prod.pname,prod.category)" >Delete</button>
+        </div>
+        		
+    </div>
+
+
