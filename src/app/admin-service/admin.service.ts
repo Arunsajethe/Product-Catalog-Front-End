@@ -98,9 +98,10 @@ export class AdminService {
   }
 
   //updating checkstatus by approving and dispproving to vendor login 
-  updateRegister(email:any, status:any)
+  updateRegister(email:string, checkStatus:string)
   {
-    return this.http.put(`${this.url2}/register`,email);
+    const params = new HttpParams().set('email',email).set('checkStatus',checkStatus);
+    return this.http.put(`${this.url2}/register`,params);
   }
 
 

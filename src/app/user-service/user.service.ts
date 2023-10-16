@@ -30,12 +30,4 @@ export class UserService {
     return this.http.post(`${this.url1}/sendOtp`,email);
   }
 
-  addSubProduct(subproduct:any)
-  {
-
-  }
-
-  
-
-
 }

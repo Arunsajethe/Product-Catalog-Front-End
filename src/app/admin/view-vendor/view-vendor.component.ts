@@ -42,7 +42,7 @@ export class ViewVendorComponent {
     }
     else
     {
-
+      this.service.updateRegister(email,oper).subscribe();
     }
 
   }
