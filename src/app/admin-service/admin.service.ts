@@ -19,6 +19,9 @@ export class AdminService {
   //link of Registration component of spring boot
   private url2:string = "http://localhost:9001";
 
+  //link of Otp Sending of spring boot backend
+  private url3:string = "http://localhost:9006";
+
   constructor(private http:HttpClient) { }
 
   //add product to database
@@ -102,6 +105,14 @@ export class AdminService {
   {
     const params = new HttpParams().set('email',email).set('checkStatus',checkStatus);
     return this.http.put(`${this.url2}/register`,params);
+  }
+
+  //mailing when approving and disapproving customer
+  mailResponse(email:string,checkStatus:any)
+  {
+    const params = new HttpParams().set('email',email).set('oper',checkStatus);
+    return this.http.post(`${this.url3}/approving`,params);
+
   }
 
 

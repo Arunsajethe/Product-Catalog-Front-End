@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
 import { Register } from 'src/app/user/Register';
 
@@ -43,6 +44,9 @@ export class ViewVendorComponent {
     else
     {
       this.service.updateRegister(email,oper).subscribe();
+      timer(1000).subscribe(()=>{
+        this.service.mailResponse(email,oper).subscribe();
+      });
     }
 
   }
