@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../Product';
-import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from 'src/app/admin-service/admin.service';
+import { Product } from '../Product';
+import { timer } from 'rxjs';
 import { Sub_Product } from '../MySubProduct';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-product',
@@ -12,56 +14,145 @@ import { Sub_Product } from '../MySubProduct';
 })
 export class EditProductComponent {
 
-  myProduct:any;
-  products:Product;
-  subproductarr:any;
+  editForm: FormGroup;
 
   prodName:any;
   prodCategory:any;
-  loadOf:boolean = false;
+  myProduct:any;
+  pname:FormControl;
+  category:FormControl;
+  validity:FormControl;
+  recommended:FormControl;
+  features:FormControl;
+  subproducts:FormControl;
 
-  features:string[]=[];
-  recommendedlist=['Consumer','Small Business', 'Enterprise']
+  hasSubproduct:boolean=false;
+
+  recommendedlist=['Consumer','Small Business','Enterprise'];
   feature_wireless = ['1.5 GB/Day','1 GB/Day', '3 GB/Day', '5 GB/Day', 'Unlimited Internet'];
   feature_wireline = ['@ 30 Mbps Speed', '@ 40 Mbps Speed', '@ 50 Mbps Speed', '@ 60 Mbps Speed', '@ 80 Mbps Speed', '@ 100 Mbps Speed'];
+  myfeatures:any;
+  subproductarr:any;
+  selectedSubproduct:any;
+  selectedFeatures:any;
+  mySubproduct:any=[];
+  mySelectedSubproduct:any=[];
 
-  checkingSubProd:boolean=false;
-  checkingProdFeature:boolean=false;
-  isChecked:boolean[];
-  isChecked1:boolean[];
-  haserror1:boolean=false;
-  callingIsChecked:boolean=false;
-  smsIsChecked:boolean=false;
-  wifiIsChecked:boolean=false;
-
-  constructor(private route:ActivatedRoute, private service: AdminService)
+  constructor(private route:ActivatedRoute, private service:AdminService)
   {
-    this.products = new Product(this.prodName,0,[],this.prodCategory,[],'');
-    this.isChecked=[false,true];
-    this.isChecked1=[false,true];
+      service.getSubProduct().subscribe(e => {this.subproductarr = e});
 
-    this.service.getSubProduct().subscribe(e => {this.subproductarr = e});
+
+      this.route.params.subscribe((params)=>
+      {
+        this.prodName = params['pname'];
+        this.prodCategory = params['category'];
+      });
+
+      console.log(this.prodName);
+      console.log(this.prodCategory);
+
+      if(this.prodCategory=="wireline")
+      {
+        this.myfeatures = this.feature_wireline;
+      }
+      else
+      {
+        this.myfeatures = this.feature_wireless;
+      }
+      
+
+      timer(1000)
+      this.pname = new FormControl(this.prodName,[Validators.required])
+      this.category = new FormControl(this.prodCategory,[Validators.required])
+      this.validity = new FormControl(0,[Validators.required, Validators.max(366), Validators.min(27)])
+      this.recommended = new FormControl('',[Validators.required])
+      this.features = new FormControl([],[Validators.required])
+      this.subproducts = new FormControl([],[Validators.required])
+      this.editForm = new FormGroup({   
+        pname:this.pname,
+        category:this.category,
+        validity:this.validity,
+        recommended:this.recommended,
+        features:this.features,
+        subproducts:this.subproducts
+       });
+
 
   }
 
   ngOnInit():void
   {
-    this.route.params.subscribe((params)=>
-    {
-      this.prodName = params['pname'];
-      this.prodCategory = params['category'];
-    });
-
-    this.featuredisplay(this.prodCategory);
-
     this.service.editProduct(this.prodName, this.prodCategory).subscribe(e => {
       this.myProduct = e;
       console.log(this.myProduct);
 
-      this.loadOf = true;
-    });
+      
+      this.editForm.get('recommended')?.setValue(this.myProduct?.recommended);
+      this.editForm.get('validity')?.setValue(this.myProduct?.validity);
+      this.editForm.get('features')?.setValue(this.myProduct?.features);
+      this.selectedSubproduct = this.myProduct?.subproducts;
+      this.selectedFeatures = this.myProduct?.features;
+
+      
+      for (let k of this.selectedSubproduct)
+      {
+        console.log(k);
+        this.mySelectedSubproduct.push(new Sub_Product(k.sname));
+        this.mySubproduct.push(k.sname);
+      }
+
+      this.editForm.get('subproducts')?.setValue(this.mySelectedSubproduct)
+
+  
+      });
+    
   }
 
+  updatingFeatures(feat:any)
+  {
+    if(this.editForm.value.features.includes(feat))
+    {
+      this.editForm.value.features = this.editForm.value.features.filter((i:any) => i !==feat)
+    }
+    else
+    {
+      if(this.prodCategory==='wireline')
+      {
+        this.editForm.value.features=['Unlimited Internet'];
+      }
+      else
+      {
+        this.editForm.value.features=['Unlimited Calling',"100 SMS/Day"];
+      }
+      this.editForm.value.features.push(feat);
+    }
+  }
+
+  updatingSubproduct(sub:any)
+  {
+      this.hasSubproduct = false;
+      for(let subp of this.editForm.value.subproducts)
+      {
+
+        if(subp.sname === sub)
+        {
+          this.hasSubproduct = true;
+          this.editForm.value.subproducts = this.editForm.value.subproducts.filter((j:any) => j.sname !==sub)
+          console.log(this.editForm.value.subproducts); 
+        }
+        
+      }
+
+      if(!this.hasSubproduct)
+      {
+         this.editForm.value.subproducts.push(new Sub_Product(sub));
+         console.log(this.editForm.value.subproducts);
+      }
+
+  }
+  
+  haserror1:boolean=false;
   recommentedValidity(category:any)
   {
     if(category==='default')
@@ -74,99 +165,15 @@ export class EditProductComponent {
     }
   }
 
-  checkedSupProduct(subP:any,valu:any)
-  {
-    this.checkingSubProd=true;
-
-    if(valu)
-    {
-      this.products.subproducts.push(new Sub_Product(subP));
-      console.log(this.products.subproducts)
-    }
-    else
-    {
-      this.products.subproducts = this.products.subproducts.filter(item=> item.sname!==subP)
-      console.log(this.products.subproducts)
-    }
-  }
-
-  subProductValidity():boolean
-  {
-    if(this.products.subproducts.length >=1)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-
-  featureValidity():boolean
-  {
-    if(this.products.features.length == 2 && this.products.category=="wireline" && this.products.features.includes("Unlimited Internet"))
-    {
-      return true;
-    }
-    else if(this.products.features.length == 3 && !(this.products.features.length >3) && this.products.category=="wireless" && this.products.features.includes("Unlimited Calling") && this.products.features.includes("100 SMS/Day"))
-    {
-      
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-
-  assignFeature(prodF:any,valu:any)
-  {
-    this.checkingProdFeature=true;
-    if(valu)
-    {
-      this.products.features.push(prodF);
-      console.log(this.products.features)
-    }
-    else
-    {
-      this.products.features = this.products.features.filter(item => item!==prodF)
-    }
-    
-  }
-
-  maxselection:any;
-  featuredisplay(cat:string)
-  {
-    console.log("feature");
-    console.log(cat);
-    if(cat=='wireline')
-    {
-      this.products.features=[];
-       this.features=this.feature_wireline;
-       this.maxselection = 2;
-    }
-    else if(cat == 'wireless')
-    {
-      this.products.features=[];
-       this.features = this.feature_wireless;
-       this.maxselection = 3;
-    }
-    else{
-      this.features = [];
-    }
-  }
-
   dataSubmitted()
   {
-    this.products.pname=this.prodName;
-    this.products.category= this.prodCategory;
-    console.log(this.products);
-
-    this.service.updateProduct(this.products).subscribe();
+    this.service.updateProduct(this.editForm.value).subscribe();
 
     Swal.fire({
-      icon:'success',
-      title: 'Product Updated'
-    })
+      icon:"success",
+      title:"Updated Succesfully"
+    });
   }
+
+
 }

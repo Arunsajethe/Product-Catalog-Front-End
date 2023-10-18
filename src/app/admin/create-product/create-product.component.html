@@ -61,7 +61,7 @@
                 <div *ngFor="let item of features; let i= index">
                     <table >
                         <tr>
-                            <td><input type="checkbox" name="item" id="temp" [value]="item" required [disabled]="category.value == '' || category.value == 'default' " [(ngModel)]="isChecked1[i]" #prodfeature (change)="assignFeature(item,isChecked1[i]?true:false)"  [class.is-invalid]="prodfeature.checked && featureValidity()"></td>
+                            <td><input type="radio" name="item" id="temp" [value]="item" required [disabled]="category.value == '' || category.value == 'default' " [(ngModel)]="isChecked1[i]" #prodfeature (change)="assignFeature(item,isChecked1[i]?true:false)"  [class.is-invalid]="prodfeature.checked && featureValidity()"></td>
                             <td>&nbsp;&nbsp;&nbsp;</td>
                             <td>{{item}}</td>
                         </tr>   
