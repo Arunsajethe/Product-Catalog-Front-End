@@ -21,6 +21,7 @@ export class LoginserviceService {
     {
       this.log=true;
       this.session.setItem('examplekey','examplevalue');
+      this.session.setItem('superadmin','superadmin');
       return true;
     }
     else{
@@ -33,8 +34,17 @@ export class LoginserviceService {
     return !!this.getCurrentUser();
   }
 
+  isSuperAdmin():boolean
+  {
+    return !!this.getSuperAdmin();
+  }
+
   getCurrentUser(): any{
     return this.session.getItem('examplekey');
+  }
+
+  getSuperAdmin():any{
+    return this.session.getItem('superadmin');
   }
 
   logout():any{
