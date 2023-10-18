@@ -14,6 +14,7 @@ import { SearchComponent } from './admin/search/search.component';
 import { ViewVendorComponent } from './admin/view-vendor/view-vendor.component';
 import { EditProductComponent } from './admin/edit-product/edit-product.component';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
+import { ProductControlComponent } from './admin/product-control/product-control.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,10 @@ const routes: Routes = [
   {
     path:"editproduct/:pname/:category",
     component:EditProductComponent
+  },
+  {
+    path:"productcontrol",
+    component:ProductControlComponent
   },
   {
     path:"**",

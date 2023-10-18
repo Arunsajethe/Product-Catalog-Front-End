@@ -21,7 +21,7 @@
           <li>{{i.sname}}</li>
       </ul>
       <a class="a-button" [routerLink]="['/editproduct',prod.pname,prod.category]">EDIT</a>
-      <button type="submit" class="button" >Delete</button>
+      <button type="submit" class="button" (click)="remove(prod.pname,prod.category)" >Delete</button>
   </div>
       
 </div>

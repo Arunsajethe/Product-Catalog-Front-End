@@ -115,5 +115,18 @@ export class AdminService {
 
   }
 
+  //Accepting product by super admin
+  acceptingProduct(pname:any,category:any,status:any)
+  {
+    const params = new HttpParams().set("pname",pname).set("category",category).set("status",status);
+    return this.http.put(`${this.url}/approveProduct`,params);
+  }
+
+  //Getting all the product both accepted and disaccept
+  getAllProduct()
+  {
+    return this.http.get(`${this.url}/vendorProduct`,{responseType:'json'});
+  }
+
 
 }

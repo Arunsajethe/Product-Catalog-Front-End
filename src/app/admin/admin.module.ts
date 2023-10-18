@@ -11,7 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { CreateSubproductComponent } from './create-subproduct/create-subproduct.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
-import { ProductsPipe } from './view-products/products.pipe'
+import { ProductsPipe } from './view-products/products.pipe';
+import { ProductControlComponent } from './product-control/product-control.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProductsPipe } from './view-products/products.pipe'
     ViewVendorComponent,
     CreateSubproductComponent,
     EditProductComponent,
-    ProductsPipe
+    ProductsPipe,
+    ProductControlComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { ProductsPipe } from './view-products/products.pipe'
     ViewProductsComponent,
     SearchComponent,
     ViewVendorComponent,
-    EditProductComponent
+    EditProductComponent,
+    ProductControlComponent
   ]
 })
 export class AdminModule { }

@@ -1,0 +1,39 @@
+<br><br>
+<table style="width: 95%; left:2.5%; position: absolute;" *ngIf="hasdisplay">
+    <thead style="text-align: center;">
+        <tr>
+            <th>Product Name</th>
+            <th>Product Category</th>
+            <th>Product Features</th>
+            <th>Product Validity</th>
+            <th>Product Recommended</th>
+            <th>Product Subproducts</th>
+            <th>Choice</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let l of myProduct">
+        <tr>
+            <td>{{l.pname}}</td>
+            <td>{{l.category}}</td>
+            <td>
+                <ul *ngFor="let l2 of l.features">
+                    <li>{{l2}}</li>
+                </ul>
+            </td>
+            <td>{{l.validity}}</td>
+            <td>{{l.recommended}}</td>
+            <td>
+                <ul *ngFor="let l1 of l.subproducts">
+                    <li>{{l1.sname}}</li>
+                </ul>
+            </td>
+            <td>
+            <button type="submit" name="oper" value="Approve" (click)="dataSubmitted(l.pname,l.category,'approve')" class="btn-btn-primary">Approve</button>
+            <button type="submit" name="oper" value="Disapprove" (click)="dataSubmitted(l.pname,l.category,'disapprove')" class="btn-btn-primary">Dis-Approved</button>
+
+            </td>
+        </tr>
+    </ng-container>
+    </tbody>
+</table>    
