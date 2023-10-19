@@ -15,6 +15,9 @@ import { ViewVendorComponent } from './admin/view-vendor/view-vendor.component';
 import { EditProductComponent } from './admin/edit-product/edit-product.component';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { ProductControlComponent } from './admin/product-control/product-control.component';
+import { DisapproveComponent } from './admin/disapprove/disapprove.component';
+import { ViewStatusComponent } from './admin/view-status/view-status.component';
+import { CustomerLoginComponent } from './user/customer-login/customer-login.component';
 
 const routes: Routes = [
   {
@@ -72,6 +75,18 @@ const routes: Routes = [
   {
     path:"productcontrol",
     component:ProductControlComponent
+  },
+  {
+    path:"disapproveResponse/:pname/:category/:oper",
+    component:DisapproveComponent
+  },
+  {
+    path:"viewStatus",
+    component:ViewStatusComponent
+  },
+  {
+    path:"customerLogin",
+    component:CustomerLoginComponent
   },
   {
     path:"**",

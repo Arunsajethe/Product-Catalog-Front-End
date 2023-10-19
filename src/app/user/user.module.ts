@@ -10,6 +10,7 @@ import { MyoffersComponent } from './myoffers/myoffers.component';
 import { WirelineComponent } from './wireline/wireline.component';
 import { WirelessComponent } from './wireless/wireless.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { CustomerLoginComponent } from './customer-login/customer-login.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     MyoffersComponent,
     WirelineComponent,
     WirelessComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    CustomerLoginComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     MyoffersComponent,
     WirelessComponent,
     WirelineComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    CustomerLoginComponent
   ]
 })
 export class UserModule { }

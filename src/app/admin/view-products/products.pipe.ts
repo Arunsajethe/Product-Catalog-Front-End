@@ -17,12 +17,9 @@ export class ProductsPipe implements PipeTransform {
       return myproducts;
     }
     else{
-      timer(1000).subscribe(()=>{
-        const fitlerproducts = myproducts.filter((prod)=>{prod.category==="wireless"});
-      console.log(fitlerproducts);
-      })
-      
-      return myproducts.filter((prod)=>{prod.category===`${category}`});
+      console.log("fitering pipe");
+      console.log(myproducts.filter(prod => prod.category == category));
+      return myproducts.filter((prod)=>prod.category== category);
     }
   }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
 import { Register } from 'src/app/user/Register';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-vendor',
@@ -9,9 +10,6 @@ import { Register } from 'src/app/user/Register';
   styleUrls: ['./view-vendor.component.css']
 })
 export class ViewVendorComponent {
-
-  myadmin:Register[]=[new Register('ABC','XYZ','abc@gmail.com','male','16 abc Chennai',20,'9845120055','abcdgheee'),
-                      new Register('GHI','QRS','ghi@gmail.com','female','3 xyz Madurai',20,'9941120055','acdcdgheee')];
 
   myRegisters:any;
   hasdisplay:boolean= false;
@@ -46,6 +44,22 @@ export class ViewVendorComponent {
       this.service.updateRegister(email,oper).subscribe();
       timer(1000).subscribe(()=>{
         this.service.mailResponse(email,oper).subscribe();
+      });
+
+    }
+
+    if(oper == 'Approve')
+    {
+      Swal.fire({
+        icon:"success",
+        title:"Vendor Account approved"
+      });
+    }
+    else
+    {
+      Swal.fire({
+        icon:"success",
+        title:"Vendor Account deactivated"
       });
     }
 

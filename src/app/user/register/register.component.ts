@@ -22,7 +22,7 @@ export class RegisterComponent {
   genderlist=['Male','Female'];
   
   constructor(private router: Router, private userservice: UserService){
-    this.register= new Register('','','','','',0,'','')
+    this.register= new Register('','','','','',0,'','','')
   }
 
   ageValidation(age:number)

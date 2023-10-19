@@ -13,6 +13,11 @@ export class ProductControlComponent {
   myProduct:any;
   mylength:any;
   hasdisplay:boolean=false;
+  pname:any;
+  category:any;
+  operation:any;
+  
+  
 
   constructor(private service:AdminService)
   {
@@ -29,9 +34,9 @@ export class ProductControlComponent {
       else{
         this.mylength = false;
       }
-
       
     })
+
 
   }
 
@@ -40,7 +45,7 @@ export class ProductControlComponent {
     console.log(pname);
     console.log(oper);      
     
-    this.service.acceptingProduct(pname,category,oper).subscribe();
+    this.service.acceptingProduct(pname,category,oper,'Super Admin has approved your Product').subscribe();
 
     if(oper == 'approve')
     {
@@ -56,8 +61,22 @@ export class ProductControlComponent {
         title:"Product disapproved"
       });
     }
-   
+
+    this.service.getAllProduct().subscribe(e =>{
+      this.myProduct = e;
+    });
+    this.hasdisplay=true;
+
+    timer(1000).subscribe(()=>{
+      if(this.myProduct.length == 0)
+      {
+        this.mylength = true;
+      }
+      else{
+        this.mylength = false;
+      }});
 
   }
 
+  
 }

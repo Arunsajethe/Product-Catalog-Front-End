@@ -17,21 +17,24 @@
                   Create
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" routerLink="/createproduct">Product</a></li>
+                  <li><a class="dropdown-item"  routerLink="/createproduct">Product</a></li>
                   <li><a class="dropdown-item" routerLink="/createsubproduct">Sub-Product</a></li>
                 </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="/viewproducts">View Product</a>
-          </li>
+            </li>
+            <li class="nav-item" *ngIf="!service.isSuperAdmin()">
+              <a class="nav-link" routerLink="/viewStatus">Products Status </a>
+            </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/searchproducts">Search</a>
+                <a class="nav-link" routerLink="/searchproducts"  >Search</a>
             </li>
             <li class="nav-item" *ngIf="service.isSuperAdmin()">
                 <a class="nav-link" routerLink="/viewvendor">View Vendor</a>
             </li>
             <li class="nav-item" *ngIf="service.isSuperAdmin()">
-              <a class="nav-link" routerLink="/productcontrol">Vendor Products</a>
+              <a class="nav-link" routerLink="/productcontrol">Products Authorization</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" (click)="service.logout()">Logout</a>

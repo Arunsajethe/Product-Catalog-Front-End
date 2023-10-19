@@ -1,0 +1,60 @@
+<div class="body">
+    <div class="wrapper">
+        <form #reasonForm="ngForm" (ngSubmit)="dataSubmitted()" >
+            <h3 style="text-align: center;"> Disapproving Product</h3>
+            <br>
+            <div class="input-box" >
+                <label for="">Product Name</label>{{ myProducts.pname }}
+            </div>
+
+            <div class="input-box" style="margin-top: 10px;">
+                <label for="">Product Category</label>{{ myProducts.category}}
+            </div>
+
+            <div class="input-box" style="margin-top: 10px;" >
+                <label for="temp" >Product Feature</label>
+                <ul *ngFor=" let l of myProducts.features">
+                    <li>{{l}}</li>
+                </ul>
+            </div>
+
+            <div class="input-box" style="margin-top: 10px;">
+                <label for="">Product Validity</label>{{myProducts.validity}}
+            </div>
+
+            <div class="input-box" style="margin-top: 10px;">
+                <label for="">Product Recommended</label>{{myProducts.recommended}}
+            </div>
+
+            <div class="input-box" style="margin-top: 10px;" >
+                <label for="temp" >Product Sub-product</label>
+                <ul *ngFor="let l1 of myProducts.subproducts">
+                    <li>{{l1.sname}}</li>
+                </ul>
+            </div>
+
+            <div class="input-box" style="margin-top: 10px;">
+                <label for="">Product Creator Email</label>{{myProducts.email}}
+            </div>
+
+            <div class="input-box" style="margin-top: 10px;">
+                <label for="">Product Creator Username</label>{{myProducts.user}}
+            </div>
+            
+            <div class="input-box" style="margin-top: 10px;">
+                <label for="">Reason</label>
+                <input type="text" name="Reason" [(ngModel)]="reason" #reas="ngModel" required [class.is-invalid]="reas.touched && reas.invalid" >
+                <div *ngIf="reas.touched">
+                    <div *ngIf="reas.invalid">
+                        <small class="text-danger" *ngIf="reas.errors?.['required']">Reason cannot be empty</small>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn" [disabled]="reasonForm.form.invalid" >Submit</button>
+
+        </form>
+    </div>
+</div>
+
+

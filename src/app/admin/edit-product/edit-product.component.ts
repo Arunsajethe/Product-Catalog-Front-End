@@ -6,6 +6,7 @@ import { Product } from '../Product';
 import { timer } from 'rxjs';
 import { Sub_Product } from '../MySubProduct';
 import Swal from 'sweetalert2';
+import { LoginserviceService } from 'src/app/loginservice.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -37,8 +38,9 @@ export class EditProductComponent {
   selectedFeatures:any;
   mySubproduct:any=[];
   mySelectedSubproduct:any=[];
+  status:any;
 
-  constructor(private route:ActivatedRoute, private service:AdminService)
+  constructor(private route:ActivatedRoute, private service:AdminService, private login:LoginserviceService)
   {
       service.getSubProduct().subscribe(e => {this.subproductarr = e});
 
@@ -75,7 +77,7 @@ export class EditProductComponent {
         validity:this.validity,
         recommended:this.recommended,
         features:this.features,
-        subproducts:this.subproducts
+        subproducts:this.subproducts,
        });
 
 
@@ -87,7 +89,7 @@ export class EditProductComponent {
       this.myProduct = e;
       console.log(this.myProduct);
 
-      
+      this.status = this.myProduct?.status;
       this.editForm.get('recommended')?.setValue(this.myProduct?.recommended);
       this.editForm.get('validity')?.setValue(this.myProduct?.validity);
       this.editForm.get('features')?.setValue(this.myProduct?.features);
@@ -167,7 +169,10 @@ export class EditProductComponent {
 
   dataSubmitted()
   {
-    this.service.updateProduct(this.editForm.value).subscribe();
+    const email = this.login.getEmail();
+    const user = this.login.getUsername();
+    const update = {email:email,user:user,status:this.status, ...this.editForm.value};
+    this.service.updateProduct(update).subscribe();
 
     Swal.fire({
       icon:"success",

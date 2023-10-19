@@ -12,7 +12,9 @@ import { HttpClientModule} from '@angular/common/http';
 import { CreateSubproductComponent } from './create-subproduct/create-subproduct.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ProductsPipe } from './view-products/products.pipe';
-import { ProductControlComponent } from './product-control/product-control.component'
+import { ProductControlComponent } from './product-control/product-control.component';
+import { ViewStatusComponent } from './view-status/view-status.component';
+import { DisapproveComponent } from './disapprove/disapprove.component'
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { ProductControlComponent } from './product-control/product-control.compo
     CreateSubproductComponent,
     EditProductComponent,
     ProductsPipe,
-    ProductControlComponent
+    ProductControlComponent,
+    ViewStatusComponent,
+    DisapproveComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,9 @@ import { ProductControlComponent } from './product-control/product-control.compo
     SearchComponent,
     ViewVendorComponent,
     EditProductComponent,
-    ProductControlComponent
+    ProductControlComponent,
+    DisapproveComponent,
+    ViewStatusComponent
   ]
 })
 export class AdminModule { }

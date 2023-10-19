@@ -7,7 +7,8 @@ export class Register
                 public address:string,
                 public age:number,
                 public phno:string,
-                public password:string
+                public password:string,
+                public checkstatus:string
                 )    
     {
 

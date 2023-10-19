@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/user-service/user.service';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -9,9 +10,11 @@ import Swal from 'sweetalert2'
 })
 export class WirelineComponent {
 
-  constructor(private router:Router)
-  {
+  myWireless:any
 
+  constructor(private router:Router, private service:UserService)
+  {
+    this.service.getAllWireline().subscribe(e => this.myWireless=e);
   }
 
   payment()

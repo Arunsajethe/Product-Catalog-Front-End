@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AdminService } from 'src/app/admin-service/admin.service';
+import { UserService } from 'src/app/user-service/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,9 +11,11 @@ import Swal from 'sweetalert2';
 })
 export class MyoffersComponent {
 
-  constructor(private router:Router)
-  {
+  myProduct:any;
 
+  constructor(private router:Router, private service:UserService)
+  {
+    this.service.displayProducts().subscribe(e => this.myProduct = e);
   }
 
   payment()

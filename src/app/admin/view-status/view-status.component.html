@@ -1,11 +1,4 @@
-    <br>
-    <div class="display" style="align-items: center;  margin: auto;">
-        <select [(ngModel)]="defaultCategory" name="category" class="form-select form-select-sm">
-        <option value="All">ALL</option>
-        <option  *ngFor="let cat of category" value="{{cat}}">{{cat}}</option>
-        </select>
-    </div>
-    <h1 *ngIf="mylength" style="text-align: center; margin-top: 10rem;"> No Product Available</h1>
+<h1 *ngIf="mylength" style="text-align: center; margin-top: 10rem;"> No Product Available</h1>
     <br><br>
     <table style="width: 95%; left:2.5%; position: absolute;" *ngIf="!mylength">
         <thead style="text-align: center;">
@@ -16,7 +9,8 @@
                 <th>Product Validity</th>
                 <th>Product Recommended</th>
                 <th>Product Subproducts</th>
-                <th>Choice</th>
+                <th>Product Status</th>
+                <th>Status Description / Message </th>
             </tr>
         </thead>
         <tbody>
@@ -36,17 +30,9 @@
                         <li>{{l1.sname}}</li>
                     </ul>
                 </td>
-                <td>
-                <button type="submit" name="oper" [routerLink]="['/editproduct',l.pname,l.category]" class="btn-btn-primary">Edit</button>
-                <button type="submit" class="btn-btn-primary" (click)="remove(l.pname,l.category)" >Delete</button>
-    
-                </td>
+                <td>{{l.status}}</td>
+                <td>{{l.msg}}</td>
             </tr>
         </ng-container>
         </tbody>
     </table>
-
-
-    
-
-

@@ -2,18 +2,22 @@
 <table style="width: 95%; left:2.5%; position: absolute;" *ngIf="hasdisplay">
     <thead style="text-align: center;">
         <tr>
-            <th>Product Name</th>
-            <th>Product Category</th>
-            <th>Product Features</th>
-            <th>Product Validity</th>
-            <th>Product Recommended</th>
-            <th>Product Subproducts</th>
+            <th>Email </th>
+            <th>Username</th>
+            <th> Name</th>
+            <th> Category</th>
+            <th> Features</th>
+            <th> Validity</th>
+            <th>Recommended</th>
+            <th> Subproducts</th>
             <th>Choice</th>
         </tr>
     </thead>
     <tbody>
         <ng-container *ngFor="let l of myProduct">
         <tr>
+            <td>{{l.email}}</td>
+            <td>{{l.user}}</td>
             <td>{{l.pname}}</td>
             <td>{{l.category}}</td>
             <td>
@@ -29,11 +33,14 @@
                 </ul>
             </td>
             <td>
-            <button type="submit" name="oper" value="Approve" (click)="dataSubmitted(l.pname,l.category,'approve')" class="btn-btn-primary">Approve</button>
-            <button type="submit" name="oper" value="Disapprove" (click)="dataSubmitted(l.pname,l.category,'disapprove')" class="btn-btn-primary">Dis-Approved</button>
-
+            <button type="submit" name="oper" value="Approve" *ngIf="l.status!=='approve'" (click)="dataSubmitted(l.pname,l.category,'approve')" class="btn-btn-primary">Approve</button>
+            <button type="submit" name="oper" value="Disapprove" *ngIf="l.status =='approve'" [routerLink]="['/disapproveResponse',l.pname,l.category,'disapprove']" class="btn-btn-primary">
+                Dis-Approved
+            </button>
+            
             </td>
         </tr>
     </ng-container>
     </tbody>
-</table>    
+</table>
+

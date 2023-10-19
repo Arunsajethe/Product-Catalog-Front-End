@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Product } from '../Product';
-import { SubProduct } from '../Subproduct';
 import Swal from 'sweetalert2';
 import { AdminService } from 'src/app/admin-service/admin.service';
 import { timer } from 'rxjs';
 import { Sub_Product } from '../MySubProduct';
+import { LoginserviceService } from 'src/app/loginservice.service';
 
 @Component({
   selector: 'app-create-product',
@@ -25,7 +25,7 @@ export class CreateProductComponent {
 
   checkingProdFeature:boolean=false;
 
-  feature_wireless = ['1.5 GB/Day','1 GB/Day', '3 GB/Day', '5 GB/Day', 'Unlimited Internet'];
+  feature_wireless = ['1.5 GB/Day','1 GB/Day','2 GB/Day', '3 GB/Day', '5 GB/Day', 'Unlimited Internet'];
 
   feature_wireline = ['@ 30 Mbps Speed', '@ 40 Mbps Speed', '@ 50 Mbps Speed', '@ 60 Mbps Speed', '@ 80 Mbps Speed', '@ 100 Mbps Speed'];
 
@@ -40,16 +40,23 @@ export class CreateProductComponent {
   smsIsChecked:boolean=false;
 
   wifiIsChecked:boolean=false;
+  mail:any;
+  firstName:any;
 
-  constructor(private adminservice: AdminService)
+  constructor(private adminservice: AdminService, private service:LoginserviceService)
   {
-    this.products = new Product('',0,[],'',[],'');
+    const email = this.service.getEmail();
+    const user = this.service.getUsername();
+    this.mail = email
+    this,this.firstName= user;
+    console.log(email);
+    console.log(user);
+    
+    this.products = new Product('',0,[],'',[],'',email,user,'pending','Wait till super admin approve the product');
     this.isChecked=[false,true];
     this.isChecked1=[false,true];
 
     this.adminservice.getSubProduct().subscribe(e => {this.subproductarr = e});
-
-
 
   }
 
@@ -174,12 +181,24 @@ export class CreateProductComponent {
       if(this.nameCheck.length==0)
       {
         timer(1000).subscribe(()=>{
+          console.log(this.products);
+          
           this.adminservice.addProduct(this.products).subscribe();
-          Swal.fire({
-          icon:'success',
-          title: 'Product Created',
-          text: 'Product Added Successfully!!!'
-        });
+          if(this.mail=='superadmin')
+          {
+            Swal.fire({
+              icon:'success',
+              title: 'Product Created'
+            });
+          }
+          else
+          {
+            Swal.fire({
+              icon:'success',
+              title: 'Product Created',
+              text: 'Wait for Admin to accept the product'
+            });
+          }
         })
         
       }
