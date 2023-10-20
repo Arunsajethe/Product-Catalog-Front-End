@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
+import { LoginserviceService } from 'src/app/loginservice.service';
 
 @Component({
   selector: 'app-view-status',
@@ -13,7 +14,7 @@ export class ViewStatusComponent {
   myproducts:any;
   mylength:any;
 
-  constructor(private service:AdminService)
+  constructor(private service:AdminService, private route:Router, public login:LoginserviceService)
   {
     service.getAllProduct().subscribe(e=> this.myproducts=e);
 
@@ -27,4 +28,13 @@ export class ViewStatusComponent {
       }
     })
   }
+
+  navigateHome()
+  {
+   console.log("hello")
+   this.route.navigateByUrl("/**");
+
+  }
+
+
 }

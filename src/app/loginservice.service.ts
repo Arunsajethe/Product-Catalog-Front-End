@@ -34,7 +34,7 @@ export class LoginserviceService {
       // const temp =this.http.get(`${this.url}/loginChecking/${email}/${password}`).subscribe(e => this.myLogin =e);
       const temp =this.http.get(`${this.url}/loginChecking/${email}/${password}`).subscribe(e =>{console.log(e);
         this.myLogin =e;
-        timer(1000).subscribe(()=>{
+        timer(500).subscribe(()=>{
           if(this.myLogin.length !== 0)
           {
             this.session.setItem('examplekey','examplevalue');
@@ -49,8 +49,8 @@ export class LoginserviceService {
         })
       });
 
-      console.log(this.myLogin)
-      console.log(temp);
+      //console.log(this.myLogin)
+      // console.log(temp);
 
       return this.islogined();
     }
@@ -85,6 +85,8 @@ export class LoginserviceService {
 
   logout():any{
     this.session.removeItem('examplekey');
+    this.session.removeItem('admin');
+    this.session.removeItem('user');
     this.router.navigateByUrl("**");
 
   }

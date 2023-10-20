@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { interval, timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
+import { LoginserviceService } from 'src/app/loginservice.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +18,7 @@ export class SearchComponent {
 
   mySearch:boolean=false;
 
-  constructor(private service: AdminService)
+  constructor(private service: AdminService, private route: Router, public login:LoginserviceService)
   {
 
   }
@@ -86,6 +88,13 @@ export class SearchComponent {
       
       
     });
+  }
+
+  navigateHome()
+  {
+   console.log("hello")
+   this.route.navigateByUrl("/**");
+
   }
 
 }

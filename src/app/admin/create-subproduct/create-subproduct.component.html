@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body" *ngIf="login.islogined()">
     <div class="wrapper">
         <form #mySubProduct="ngForm" (ngSubmit)="datasubmit()">
             <h1>Add Sub-Product</h1>
@@ -44,4 +44,6 @@
 </div>
     
     
-    
+<div class="body" *ngIf="!login.islogined()">
+    {{navigateHome()}}
+</div>

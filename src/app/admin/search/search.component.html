@@ -1,4 +1,4 @@
-<div class="search-box" style="margin-top: 35px;">
+<div class="search-box" style="margin-top: 35px;" *ngIf="login.islogined()">
     <div class="search-input">
       <input type="search" name="price" [(ngModel)]="price" placeholder="Search product by price" />
     </div>
@@ -7,7 +7,7 @@
 
 
 <br><br>
-<table style="width: 95%; left:2.5%; position: absolute;" *ngIf="mySearch">
+<table style="width: 95%; left:2.5%; position: absolute;" *ngIf="mySearch && login.islogined()">
   <thead style="text-align: center;">
       <tr>
           <th>Product Name</th>
@@ -45,3 +45,7 @@
   </ng-container>
   </tbody>
 </table>
+
+<div class="body" *ngIf="!login.islogined()">
+    {{navigateHome()}}
+</div>

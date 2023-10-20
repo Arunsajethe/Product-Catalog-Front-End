@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
+import { LoginserviceService } from 'src/app/loginservice.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,7 +21,7 @@ export class ProductControlComponent {
   
   
 
-  constructor(private service:AdminService)
+  constructor(private service:AdminService, private route:Router, public login:LoginserviceService)
   {
     this.service.getAllProduct().subscribe(e =>{
       this.myProduct = e;
@@ -75,6 +77,13 @@ export class ProductControlComponent {
       else{
         this.mylength = false;
       }});
+
+  }
+
+  navigateHome()
+  {
+   console.log("hello")
+   this.route.navigateByUrl("/**");
 
   }
 

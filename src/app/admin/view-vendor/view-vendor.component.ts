@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
+import { LoginserviceService } from 'src/app/loginservice.service';
 import { Register } from 'src/app/user/Register';
 import Swal from 'sweetalert2';
 
@@ -14,7 +16,7 @@ export class ViewVendorComponent {
   myRegisters:any;
   hasdisplay:boolean= false;
 
-  constructor(private service: AdminService)
+  constructor(private service: AdminService, private route:Router, public login: LoginserviceService)
   {
     this.displayRegister();
     this.hasdisplay=true;
@@ -62,6 +64,13 @@ export class ViewVendorComponent {
         title:"Vendor Account deactivated"
       });
     }
+
+  }
+
+  navigateHome()
+  {
+   console.log("hello")
+   this.route.navigateByUrl("/**");
 
   }
 

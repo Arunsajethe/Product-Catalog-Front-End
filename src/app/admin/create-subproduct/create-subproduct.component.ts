@@ -3,6 +3,8 @@ import { SubProduct } from '../Subproduct';
 import { timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { LoginserviceService } from 'src/app/loginservice.service';
 
 @Component({
   selector: 'app-create-subproduct',
@@ -11,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class CreateSubproductComponent {
 
-  constructor(private service: AdminService)
+  constructor(private service: AdminService, private route:Router, public login:LoginserviceService)
   {
     this.subproduct= new SubProduct('','','');
   }
@@ -50,6 +52,13 @@ export class CreateSubproductComponent {
       
     })
 
+
+  }
+
+  navigateHome()
+  {
+   console.log("hello")
+   this.route.navigateByUrl("/**");
 
   }
 

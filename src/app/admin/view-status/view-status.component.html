@@ -1,6 +1,6 @@
-<h1 *ngIf="mylength" style="text-align: center; margin-top: 10rem;"> No Product Available</h1>
+<h1 *ngIf="mylength && login.islogined()" style="text-align: center; margin-top: 10rem;"> No Product Available</h1>
     <br><br>
-    <table style="width: 95%; left:2.5%; position: absolute;" *ngIf="!mylength">
+    <table style="width: 95%; left:2.5%; position: absolute;" *ngIf="!mylength && login.islogined()">
         <thead style="text-align: center;">
             <tr>
                 <th>Product Name</th>
@@ -36,3 +36,7 @@
         </ng-container>
         </tbody>
     </table>
+
+    <div class="body" *ngIf="!login.islogined()">
+        {{navigateHome()}}
+    </div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
+import { LoginserviceService } from 'src/app/loginservice.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +17,7 @@ export class DisapproveComponent {
   myProducts:any;
   reason:any;
 
-  constructor(private route:ActivatedRoute, private service:AdminService, private router:Router)
+  constructor(private route:ActivatedRoute, private service:AdminService, private router:Router, public login:LoginserviceService)
   {
     this.route.params.subscribe((params)=>
       {
@@ -41,6 +42,13 @@ export class DisapproveComponent {
     });
 
     this.router.navigateByUrl("//productcontrol");
+  }
+
+  navigateHome()
+  {
+   console.log("hello")
+   this.router.navigateByUrl("/**");
+
   }
 
 }

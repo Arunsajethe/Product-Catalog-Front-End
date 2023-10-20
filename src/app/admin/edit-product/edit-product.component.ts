@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from 'src/app/admin-service/admin.service';
 import { Product } from '../Product';
@@ -40,7 +40,7 @@ export class EditProductComponent {
   mySelectedSubproduct:any=[];
   status:any;
 
-  constructor(private route:ActivatedRoute, private service:AdminService, private login:LoginserviceService)
+  constructor(private route:ActivatedRoute,private router:Router, private service:AdminService, public login:LoginserviceService)
   {
       service.getSubProduct().subscribe(e => {this.subproductarr = e});
 
@@ -180,5 +180,11 @@ export class EditProductComponent {
     });
   }
 
+  navigateHome()
+  {
+   console.log("hello")
+   this.router.navigateByUrl("/**");
+
+  }
 
 }

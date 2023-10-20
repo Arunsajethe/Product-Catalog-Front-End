@@ -5,6 +5,7 @@ import { AdminService } from 'src/app/admin-service/admin.service';
 import { timer } from 'rxjs';
 import { Sub_Product } from '../MySubProduct';
 import { LoginserviceService } from 'src/app/loginservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-product',
@@ -43,7 +44,7 @@ export class CreateProductComponent {
   mail:any;
   firstName:any;
 
-  constructor(private adminservice: AdminService, private service:LoginserviceService)
+  constructor(private adminservice: AdminService, private service:LoginserviceService, private route:Router, public login:LoginserviceService)
   {
     const email = this.service.getEmail();
     const user = this.service.getUsername();
@@ -214,6 +215,13 @@ export class CreateProductComponent {
     })
 
     
+  }
+
+  navigateHome()
+  {
+   console.log("hello")
+   this.route.navigateByUrl("/**");
+
   }
 
 

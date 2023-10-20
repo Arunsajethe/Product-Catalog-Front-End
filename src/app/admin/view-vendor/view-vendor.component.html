@@ -1,5 +1,5 @@
 <br><br>
-<table style="width: 95%; left:2.5%; position: absolute;" *ngIf="hasdisplay">
+<table style="width: 95%; left:2.5%; position: absolute;" *ngIf="hasdisplay && login.islogined()" >
     <thead style="text-align: center;">
         <tr>
             <th>First Name</th>
@@ -32,4 +32,8 @@
         </tr>
     </ng-container>
     </tbody>
-</table>    
+</table>
+
+<div class="body" *ngIf="!login.islogined()">
+    {{navigateHome()}}
+</div>

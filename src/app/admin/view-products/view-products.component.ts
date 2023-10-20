@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, timer } from 'rxjs';
 import { interval } from 'rxjs';
 import { AdminService } from 'src/app/admin-service/admin.service';
+import { LoginserviceService } from 'src/app/loginservice.service';
 
 @Component({
   selector: 'app-view-products',
@@ -19,7 +20,7 @@ export class ViewProductsComponent {
 
   mylength:boolean= false;
 
-  constructor(private service: AdminService, private router: Router)
+  constructor(private service: AdminService, private router: Router, public login:LoginserviceService)
   {
     service.displayProducts().subscribe(e=> this.myproducts=e);
 
@@ -51,5 +52,11 @@ export class ViewProductsComponent {
     });
   }
   
+  navigateHome()
+  {
+   console.log("hello")
+   this.router.navigateByUrl("/**");
+
+  }
 
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SessionStorageService } from 'src/app/session-storage.service';
 import { LoginserviceService } from 'src/app/loginservice.service';
 import { login } from '../login';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -23,9 +24,8 @@ export class LoginComponent {
   datasubmitted()
   {
      const temp = this.service.loginValidity(this.log.email,this.log.password)
-      
-
-     if(temp)
+      timer(1000).subscribe(()=>{
+      if(temp)
      {
         Swal.fire({
           icon:'success',
@@ -40,5 +40,9 @@ export class LoginComponent {
           title: 'User Credential Wrong'
         });
      }
+
+      })
+
+     
   }
 }

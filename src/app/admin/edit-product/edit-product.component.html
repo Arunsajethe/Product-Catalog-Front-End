@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body"  *ngIf="login.islogined()">
     <div class="wrapper">
         <form [formGroup]="editForm" novalidate (ngSubmit)="dataSubmitted()" >
             <h1>Update Product</h1>
@@ -97,3 +97,6 @@
 </div>
 
 
+<div class="body" *ngIf="!login.islogined()">
+    {{navigateHome()}}
+</div>

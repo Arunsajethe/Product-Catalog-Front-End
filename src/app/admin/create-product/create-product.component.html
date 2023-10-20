@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body" *ngIf="login.islogined()">
     <div class="wrapper">
         <form #mycreateproduct="ngForm" (ngSubmit)="dataSubmitted()">
             <h1>Add Product</h1>
@@ -126,4 +126,9 @@
             <button type="submit" class="btn" [disabled]="mycreateproduct.form.invalid ">Add</button>
         </form>
     </div>
+</div>
+
+
+<div class="body" *ngIf="!login.islogined()">
+{{navigateHome()}}
 </div>
